@@ -22,9 +22,6 @@ for i in range(0,301):
     l_x.append(x)
     l_y.append(y)
     l_wtf.append(wtf)
-plt.figure
-plt.plot(l_x,l_y)
-plt.show()
 
 def func_2(d,theta):
     def p_x(_):
@@ -32,21 +29,23 @@ def func_2(d,theta):
     def p_y(_):
         return 2*a*_*sin(_)
     def f(ct):
-        return sqrt((p_x(theta)-p_x(ct))**2-(p_y(theta)-p_y(ct))**2)-d
+        return sqrt((p_x(theta)-p_x(ct))**2+(p_y(theta)-p_y(ct))**2)-d
     solution = optimize.fsolve(f,theta)
-    theta_2 = solution[1]
+    theta_2 = solution[0]
     ls_f2 = []
     ls_f2.append(p_x(theta_2))
     ls_f2.append(p_y(theta_2))
-    ls_f2.append()
+    ls_f2.append("a")
     ls_f2.append(theta_2)
     if theta_2>32*pi:
         ls_f2[2]=0
     return ls_f2
 data = {}
 for i in range(1,301):
+    print(i)
     data[f'{i} s']=[None]*448
 for t in range(1,301):
+    print(t)
     data[f'{t} s'][0] = l_x[t]
     data[f'{t} s'][1] = l_y[t]
     if func_2(2.86,l_theta[t])[2] != 0:
