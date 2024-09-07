@@ -46,10 +46,10 @@ for t in range(3,300):
         k_ii = k(theta_ii)
         k_ii_vec = kToVector(k_ii)
         if df[f'{t} s'][i] != None:
-            x1=df[f'{t} s'][i-1]
-            x2=df[f'{t} s'][i]
-            y1=df[f'{t} s'][i-1]
-            y2=df[f'{t} s'][i]
+            x1=df[f'{t} s'][i]
+            x2=df[f'{t} s'][i-2]
+            y1=df[f'{t} s'][i+1]
+            y2=df[f'{t} s'][i-1]
             print("xyxy:",x1,x2,y1,y2)
             n_s = n_basic(x1-x2,y1-y2)
             n_t = [n_s[1],-n_s[0]]

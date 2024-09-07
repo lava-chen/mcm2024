@@ -26,17 +26,28 @@ Time = 500
 nPoint = 0
 rects = []
 
-# 生成参数t的值，从0到10，足够多的点来绘制平滑的曲线
-t = np.linspace(0, 2 * pi * 16, 10000)
-x = (a + beta * t) * np.cos(t)
-y = (a + beta * t) * np.sin(t)
-line, = ax.plot(x, y)
-ax.set_title('Archimedean Spiral')
-ax.grid(True)
-ax.axis('equal')
-ax.set_xlim(-10, 10)
-ax.set_ylim(-10, 10)
-
+def spiral():
+    # 生成参数t的值，从0到10，足够多的点来绘制平滑的曲线
+    t = np.linspace(0, 2 * pi * 16, 10000)
+    x = (a + beta * t) * np.cos(t)
+    y = (a + beta * t) * np.sin(t)
+    line, = ax.plot(x, y)
+    ax.set_title('Archimedean Spiral')
+    ax.grid(True)
+    ax.axis('equal')
+    ax.set_xlim(-10, 10)
+    ax.set_ylim(-10, 10)
+def circle():
+    # 生成参数t的值，从0到10，足够多的点来绘制平滑的曲线
+    t = np.linspace(0, 2 * pi, 10000)
+    x = 4.5* np.cos(t)
+    y = 4.5 * np.sin(t)
+    line, = ax.plot(x, y)
+    ax.grid(True)
+    ax.set_xlim(-10, 10)
+    ax.set_ylim(-10, 10)
+spiral()
+circle()
 # 点动画
 points = [[(a + beta * t0) * np.cos(t0), (a + beta * t0) * np.sin(t0), t0, 0]]
 point, = ax.plot([], [], 'bo', ms=5)
