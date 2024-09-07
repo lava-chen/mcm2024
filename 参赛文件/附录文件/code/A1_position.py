@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 from scipy import optimize
 from math import *
 import pandas as pd
@@ -40,25 +39,38 @@ def func_2(d,theta):
     if theta_2>32*pi:
         ls_f2[2]=0
     return ls_f2
+
 data = {}
 for i in range(1,301):
     print(i)
     data[f'{i} s']=[None]*448
+
+data_theta = {}
+for i in range(1,301):
+    print(i)
+    data_theta[f'{i} s']=[None]*224
+
 for t in range(1,301):
     print(t)
     data[f'{t} s'][0] = l_x[t]
     data[f'{t} s'][1] = l_y[t]
+    data_theta[f'{i} s'][0] = l_theta[t]
     if func_2(2.86,l_theta[t])[2] != 0:
         data[f'{t} s'][2] = func_2(2.86,l_theta[t])[0]
         data[f'{t} s'][3] = func_2(2.86,l_theta[t])[1]
     cc = func_2(2.86,l_theta[t])[3]
+    data_theta[f'{t} s'][1] = cc
     for j in range(4,448,2):
         if func_2(1.65,cc)[2] != 0:
             data[f'{t} s'][j] = func_2(2.86,l_theta[t])[0]
             data[f'{t} s'][j+1] = func_2(2.86,l_theta[t])[1]
         cc = func_2(1.65,cc)[3]
+        data_theta[f'{t} s'][int((j-2)//2)] = cc
+
+
 df = pd.DataFrame(data)
-df.to_excel('export.xlsx')
+df.to_excel('A1_position.xlsx')
 
 
-
+df_2 = pd.DataFrame(data_theta)
+df_2.to_excel('theta_data.xlsx')
