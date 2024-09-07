@@ -5,7 +5,7 @@ from sympy import *
 p = 0.55#螺距
 aa = p/(2*pi)
 
-df = pd.read_excel("A1_position.xlsx")
+df = pd.read_excel("result1.xlsx")
 df_theta = pd.read_excel("theta_data.xlsx")
 data_v = {}
 
@@ -37,6 +37,7 @@ print("2")
 #写入速度程序
 v_1 = 1#初始速度
 for t in range(3,300):
+    print("-------------",t)
     for i in range(2,362,2):
         #角度读取
         theta_i = df_theta[f'{t} s'][int(i/2)]
@@ -53,11 +54,11 @@ for t in range(3,300):
             print("xyxy:",x1,x2,y1,y2)
             n_s = n_basic(x1-x2,y1-y2)
             n_t = [n_s[1],-n_s[0]]
+            print("n_s:",n_s,"n_t:",n_t,"k_i_vec:",k_i_vec)
             if n_s[0] == nan:
                 break
             a = Symbol('a')
             b = Symbol('b')
-            print("n_s:",n_s,"n_t:",n_t,"k_i_vec:",k_i_vec)
             result = solve([a*n_s[0]+b*n_t[0]-v_1*k_i_vec[0],a*n_s[1]+b*n_t[1]-v_1*k_i_vec[1]],[a,b])
             print(result)
             a_r = result[a]
