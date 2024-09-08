@@ -70,6 +70,7 @@ for t in range(3,300):
             data_v[f'{t} s'][int(i/2)] = v_22
             v_1 = v_22
             print(i)#检验进度
+            print(v_1)
     v_1 =1
 df = pd.DataFrame(data_v)
 df.to_excel('A1_speed.xlsx')

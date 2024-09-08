@@ -20,17 +20,18 @@ pi = math.pi
 a = 0  # 初始半径
 b = 0.55  # 螺距长度
 t0 = 16 * math.sqrt(b * (2048 * math.pi ** 3 + 2 * math.pi))
-step = 6.5
+#step = 6.7625410784633
+step=6.37
 maxFrame=100000 #高精度
 minFrame = 907097200
-minFrame=81000
+minFrame=82460# 8246638651.0
 # maxFrame = 1000  # 低精度
 # minFrame = 1
 beta = b / 2 / pi
 Time = 500
 nPoint = 0
 rects = []
-
+rectFlag=[]
 # 生成参数t的值，从0到10，足够多的点来绘制平滑的曲线
 t = np.linspace(0, 2 * pi * 16, 10000)
 x = (a + beta * t) * np.cos(t)
@@ -44,7 +45,7 @@ ax.set_ylim(-10, 10)
 
 # 点动画
 points = [[(a + beta * t0) * np.cos(t0), (a + beta * t0) * np.sin(t0), t0, 0]]
-point, = ax.plot([], [], 'o',color="#8b7569", ms=3,zorder=4)
+point, = ax.plot([], [], 'o',color="#9dcae3", ms=3,zorder=5)
 text = ax.text(0, 1.03, '', transform=ax.transAxes)
 text.set_fontsize(10)
 
@@ -79,24 +80,35 @@ def update(frame):
             print(frame)
             return
     text.set_text("时间: 第" +str(int((frame / maxFrame) * Time))+"s")
+
+
+
+
     text.set_position((0, 1.03))
-    while Time * (frame - 1) / maxFrame > 2.86 + 1.65 * nPoint and len(points) <= 224:
+    while Time * frame / maxFrame > 2.86 + 1.65 * nPoint and len(points) <= 224:
         points.append([(a + beta * t0) * np.cos(t0), (a + beta * t0) * np.sin(t0),
                        16 * math.sqrt(b * (2048 * math.pi ** 3 + 2 * math.pi)) + step *
                        (2.86 + 1.65 * nPoint), nPoint])
+
         midpoint = ((points[len(points) - 1][0] + points[len(points) - 2][0]) / 2,
                     (points[len(points) - 1][1] + points[len(points) - 2][1]) / 2)
         if nPoint == 0:
-            rects.append(patches.Rectangle(midpoint, width0, length, edgecolor='#d02200', facecolor='#e0c0a0',zorder=4))
+            rects.append(patches.Rectangle(midpoint, width0, length, edgecolor='#de668c', facecolor='#e382a0',zorder=4))
         else:
-            rects.append(patches.Rectangle(midpoint, width, length, edgecolor='#8b7569', facecolor='#e0c0a0',zorder=2))
+            rects.append(patches.Rectangle(midpoint, width, length, edgecolor='#398ae6', facecolor='#63a2eb',zorder=2))
         ax.add_patch(rects[len(rects) - 1])
         nPoint += 1
     for p in points:
-        t = p[2] - step * ((Time) * (frame - 1) / maxFrame)
+        t = p[2] - step * (Time * frame / maxFrame)
         theta = np.sqrt((np.sqrt(1 + 4 * t * t / beta) - 1) / 2)
         p[0] = (a + beta * theta) * np.cos(theta)
         p[1] = (a + beta * theta) * np.sin(theta)
+        if ((frame / maxFrame) * Time == 300.0) and p == points[0]:
+            print((points[0][0], points[0][1]))
+            print((points[0][0] ** 2 + points[0][1] ** 2))
+            # -3.0439579618984424e-14
+            # (4.427130521618529, 2.306739565655037)
+            # 962.3871949851841
         if t <= 0:
             print(t)
             points.remove(p)
