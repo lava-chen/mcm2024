@@ -66,7 +66,7 @@ for t in range(3,300):
             c = Symbol('c')
             result_2 = solve([a_r*n_s[0]+c*n_t[0]-v_2*k_ii_vec[0],a_r*n_s[1]+c*n_t[1]-v_2*k_ii_vec[1]],[c,v_2])
             print(result_2)
-            v_22 = result_2[v_2]
+            v_22 = fabs(result_2[v_2])
             data_v[f'{t} s'][int(i/2)] = v_22
             v_1 = v_22
             print(i)#检验进度
