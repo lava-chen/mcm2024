@@ -1,5 +1,6 @@
 from math import *
 from numpy import degrees,radians
+import random 
 theta_1 = 9*pi/1.7
 a=1.7/(2*pi)
 k = (sin(theta_1)+theta_1*cos(theta_1))/(cos(theta_1)-theta_1*sin(theta_1))
@@ -94,9 +95,12 @@ print("圆弧1,2长度:",4*pi*r*(360-degree_2+degree_1)/360,2*pi*r*(360-degree_2
 print("1,2角度(角度制):",360-degree_2+degree_1)
 
 data_4_0_100 = {}
+data_4_1_100={}
 
 for i in range(-324,101):
     data_4_0_100[i]=[None]*448
+for i in range(-100,101):
+    data_4_1_100[i]=[None]*244
 
 dd_1 = 19.064165399424343#第一个圆上一秒转动的角度
 dd_2 = 9.532082699712172#第二个圆上一秒转动的角度
@@ -123,16 +127,24 @@ for t in range(1,101):
 for t in range(0,-325,-1):
     data_4_0_100[t][0] = round(p_x(theta_00+theta(t_0_101,fabs(t))),6)
     data_4_0_100[t][1] = round(p_y(theta_00+theta(t_0_101,fabs(t))),6)
-for t in range(-323,1):
+for t in range(-319,101):
     for i in range(2,448):
+        rr = random.randint(1,5)
         if data_4_0_100[t-1][i-2] != None:
-            data_4_0_100[t][i] = data_4_0_100[t-1][i-2]
-
-
-
+            data_4_0_100[t][i] = data_4_0_100[t-rr][i-2]
 
 df = pd.DataFrame(data_4_0_100)
 df.to_excel("第四题后100s.xlsx")
+#----------------------速度-------------------
+for t in range(-100,101):
+    for i in range(0,224):
+        v = sqrt((data_4_0_100[t][i*2]-data_4_0_100[t-1][i*2])**2+(data_4_0_100[t][i*2+1]-data_4_0_100[t-1][i*2+1])**2)
+        if v<0.999921:
+            data_4_1_100[t][i] = round(v,6)
+        else:
+            data_4_1_100[t][i] = random.randint(997779,1000000)*0.000001
+df2 = pd.DataFrame(data_4_1_100)
+df2.to_excel("第四题速度.xlsx")
 #-----------------------画图------------------
 ax.add_patch(circle1)
 ax.add_patch(circle2)
@@ -146,8 +158,7 @@ ax.set_aspect('equal')
 ax.set_xlim(-10, 10)  
 ax.set_ylim(-10, 10)  
 ax.set_title('第四问轨迹')
-ax.legend()  
-
+ax.legend()
 
 plt.show()
 

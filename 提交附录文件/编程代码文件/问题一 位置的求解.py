@@ -21,6 +21,12 @@ for i in range(0,301):
     l_x.append(x)
     l_y.append(y)
     l_wtf.append(wtf)
+data_wtf = {}
+for i in range(0,301):
+    data_wtf[i] = [l_wtf[i]]
+
+df_wtf = pd.DataFrame(data_wtf)
+df_wtf.to_excel("wtf_A1.xlsx")
 
 def func_2(d,theta):
     def p_x(_):
@@ -67,11 +73,11 @@ for t in range(1,301):
         cc = func_2(1.65,cc)[3]
         data_theta[f'{t} s'][int((j-2)//2)] = cc
 
-
 df = pd.DataFrame(data)
 df.to_excel('A1_position.xlsx')
-
 
 df_2 = pd.DataFrame(data_theta)
 df_2.to_excel('theta_data.xlsx')
 
+df_wtf = pd.DataFrame(data_wtf)
+df_wtf.to_excel("wtf_A1.xlsx")
